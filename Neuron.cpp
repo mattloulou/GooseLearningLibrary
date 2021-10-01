@@ -1,4 +1,4 @@
-#include "Neuron.h"
+#include "neuron.h"
 
 Neuron::Neuron(size_t num_outputs, size_t my_index) : output_val_(0), output_weights_(), my_index_(0), gradient_(0.0)
 {
