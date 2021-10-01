@@ -35,3 +35,6 @@
 .vs
 Debug
 x64
+
+# Visual Studio Code
+.vscode
