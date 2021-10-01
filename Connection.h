@@ -1,6 +1,7 @@
 #pragma once
 
-struct Connection {
-    double weight;
-    double deltaWeight;
+class Connection {
+public:
+    double weight_;
+    double delta_weight_;
 };
