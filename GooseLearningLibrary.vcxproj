@@ -140,11 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="connection.h" />
+    <ClInclude Include="logic_neural_network.h" />
     <ClInclude Include="neural_net.h" />
     <ClInclude Include="neuron.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="connection.cpp" />
+    <ClCompile Include="logic_neural_network.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="neural_net.cpp" />
     <ClCompile Include="neuron.cpp" />
