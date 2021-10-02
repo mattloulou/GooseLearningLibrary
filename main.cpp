@@ -1,12 +1,9 @@
-//#include "NeuralNet.h"
+#include "neural_net.h"
 #include <iostream>
-#include <cstdlib>
-#include <cassert>
+
+using namespace std;
 
 int main() 
 {
-    // xorTest();
-    //_AimpliesB_And_Not_CimpliesD_();
-    
-    
+
 }

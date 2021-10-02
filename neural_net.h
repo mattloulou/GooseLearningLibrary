@@ -1,5 +1,5 @@
 #pragma once
-#include "Neuron.h"
+#include "neuron.h"
 #include <vector>
 
 class NeuralNet

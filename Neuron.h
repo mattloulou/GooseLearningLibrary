@@ -2,7 +2,12 @@
 #include "connection.h"
 #include <vector>
 
-class Neuron {
+class Neuron;
+
+using Layer = std::vector<Neuron>;
+
+class Neuron 
+{
 public:
     Neuron(size_t num_outputs, size_t my_index);
     double GetOutputVal(void) const;
@@ -26,5 +31,3 @@ private:
     static constexpr double alpha_ = 0.5; //domain [0.0, n] multiplier of last weight change (momentum) (can be above 1 it appears, as it is from [0,n], not [0,1], according to the tutorial)
 
 };
-
-using Layer = std::vector<Neuron>;
