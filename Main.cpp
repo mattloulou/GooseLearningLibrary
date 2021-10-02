@@ -12,7 +12,6 @@ void xorTest()
     NeuralNet my_net(topology);
 
     //defining variables
-    unsigned numOfTests = 10000;
     std::vector<double> input_vals = { 0, 0 };
     std::vector<double> target_vals = { 0 };
     std::vector<double> result_vals = { 0 };
