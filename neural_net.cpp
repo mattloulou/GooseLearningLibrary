@@ -1,9 +1,11 @@
 #include "neural_net.h"
+#include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <cmath>
 #include <cassert>
 
-NeuralNet::NeuralNet(const std::vector<size_t> &topology) : error_(0.0), recent_average_error_(0.0), recent_average_smoothing_factor_(0.0)
+NeuralNet::NeuralNet(const std::vector<size_t> &topology) : error_(0.0), recent_average_error_(0.0), recent_average_smoothing_factor_(0.0), topology_(topology)
 {
     for (size_t layer_index = 0; layer_index < topology.size(); ++layer_index) 
     {
@@ -46,7 +48,7 @@ void NeuralNet::FeedForward(const std::vector<double> &input_vals)
         //-1 to filter the bias neuron
         for (size_t neuron_index = 0; neuron_index < this->layers_[layer_index].size() - 1; ++neuron_index) 
         {
-           curr_layer[neuron_index].FeedForward(prev_layer);
+           curr_layer[neuron_index].FeedFrom(prev_layer);
         }
     }
 }
@@ -123,8 +125,130 @@ std::vector<double> NeuralNet::GetResults() const
     return result_vals;
 }
 
-
 double NeuralNet::GetError() const 
 {
      return this->error_; 
+}
+
+std::vector<Layer>& NeuralNet::GetLayerRef()
+{
+    return this->layers_;
+}
+const std::vector<Layer>& NeuralNet::GetLayerRef() const
+{
+    return this->layers_;
+}
+std::vector<size_t>& NeuralNet::GetTopologyRef()
+{
+    return this->topology_;
+}
+const std::vector<size_t>& NeuralNet::GetTopologyRef() const
+{
+    return this->topology_;
+}
+
+
+
+bool NeuralNet::ExportNetworkFile(const std::string& file_name)
+{
+    if (this->layers_.empty()) return false;
+
+    std::ofstream output(file_name, std::ofstream::trunc | std::ofstream::binary);
+
+    //save topology structure
+    size_t layer_size = this->layers_.size();
+    output.write(reinterpret_cast<const char*>(&layer_size), sizeof(size_t));
+    std::clog << "layer size: " << layer_size << '\n';
+
+    for (const Layer& layer : this->layers_)
+    {
+        size_t neuron_size = layer.size();
+        output.write(reinterpret_cast<const char*>(&neuron_size), sizeof(size_t));
+        std::clog << "neuron size: " << neuron_size << '\n';
+    }
+
+    
+    //save neuron output weights
+    for (const Layer& layer : this->layers_)
+    {
+        for (const Neuron& neuron : layer)
+        {
+            const std::vector<Connection>& output_weights = neuron.GetOutputWeightsRef();
+            output.write(reinterpret_cast<const char*>(output_weights.data()), output_weights.size() * sizeof(Connection));
+        }
+    }
+    
+    output.close();
+    return true;
+}
+bool NeuralNet::ImportNetworkFile(const std::string& file_name)
+{
+    std::ifstream input(file_name, std::ifstream::binary);
+    if (!input.is_open()) return false;
+
+    //read topology structure
+    size_t layer_size = 0;
+    input.read(reinterpret_cast<char*>(&layer_size), sizeof(size_t));
+
+    std::cout << "Layer size: " << layer_size << '\n';
+
+
+    std::vector<size_t> topology(layer_size);
+    input.read(reinterpret_cast<char*>(topology.data()), layer_size * sizeof(size_t));
+
+    for (auto val : topology)
+    {
+        std::cout << val << '\n';
+    }
+
+
+    //reconstruct the neural network layout
+    this->layers_.clear();
+    for (size_t layer_index = 0; layer_index < topology.size(); ++layer_index)
+    {
+        this->layers_.push_back(Layer());
+
+        size_t num_outputs = (layer_index != topology.size() - 1) ? topology[layer_index + 1] : 0;
+
+        // < instead of <=, because the topology already contains the bias neuron
+        for (size_t neuron_index = 0; neuron_index < topology[layer_index]; ++neuron_index)
+        {
+            this->layers_.back().push_back(Neuron(num_outputs, neuron_index));
+        }
+
+        this->layers_.back().back().SetOutputVal(1.0);
+    }
+
+    
+    //read neuron output weights
+    for (Layer& layer : this->layers_)
+    {
+        for (Neuron& neuron : layer)
+        {
+            std::vector<Connection>& output_weights = neuron.GetOutputWeightsRef();
+            input.read(reinterpret_cast<char*>(output_weights.data()), output_weights.size() * sizeof(Connection));
+        }
+    }
+    
+
+    input.close();
+    return true;
+}
+
+void NeuralNet::PrintLayerInfo() const
+{
+    int i = 0;
+    for (const Layer& layer : this->layers_)
+    {
+        std::clog << "Layer: " << ++i << '\n';
+        for (const Neuron& neuron : layer)
+        {
+            const std::vector<Connection>& output_weights = neuron.GetOutputWeightsRef();
+            for (auto& val : output_weights)
+            {
+                std::cout << val.weight_ << ' ';
+            }
+            std::cout << '\n';
+        }
+    }
 }

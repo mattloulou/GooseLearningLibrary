@@ -101,9 +101,25 @@ void _AimpliesB_And_Not_CimpliesD_()  /// (A=>B) && !(C=>D)
     std::cout << "correct: " << correct << " wrong: " << wrong << " %correct: " << double(correct) / (correct + wrong) * 100 << std::endl;
 }
 
+void OutputBarNetwork()
+{
+    //4 3 3 2
+    NeuralNet bar({3, 2, 2, 1});
+    bar.FeedForward({ 1.0, 1.0, 0.0 });
+    bar.ExportNetworkFile("bar_data.txt");
+}
+
+void InputBarNetwork()
+{
+    NeuralNet bar({0, 0, 0, 0});
+    bar.ImportNetworkFile("bar_data.txt");
+    bar.PrintLayerInfo();
+}
+
 int main() 
 {
     //xorTest();
     //_AimpliesB_And_Not_CimpliesD_();
-
+    //OutputBarNetwork();
+    InputBarNetwork();
 }

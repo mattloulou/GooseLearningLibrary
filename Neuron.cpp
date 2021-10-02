@@ -19,7 +19,7 @@ void Neuron::SetOutputVal(double val)
     output_val_ = val;
 }
 
-void Neuron::FeedForward(const Layer &prev_layer)
+void Neuron::FeedFrom(const Layer &prev_layer)
 {
     double sum = 0.0;
 
@@ -41,8 +41,14 @@ void Neuron::CalcOutputGradients(double target_val)
 
 void Neuron::CalcHiddenGradients(Layer &next_layer)
 {
-    double dow = SumDOW(next_layer);
-    gradient_ = dow * Neuron::TransferFunctionDerivative(output_val_);
+    double dow = 0.0;
+
+    // Sum our contributions of the errors at the nodes we feed
+    for (size_t neuron_index = 0; neuron_index < next_layer.size() - 1 /*no bias neuron*/; ++neuron_index) {
+        dow += output_weights_[neuron_index].weight_ * next_layer[neuron_index].gradient_;
+    }
+
+    this->gradient_ = dow * Neuron::TransferFunctionDerivative(output_val_);
 }
 
 void Neuron::UpdateInputWeights(Layer &prev_layer)
@@ -71,21 +77,15 @@ void Neuron::UpdateInputWeights(Layer &prev_layer)
     }
 }
 
-double Neuron::SumDOW(const Layer &next_layer) const
+std::vector<Connection>& Neuron::GetOutputWeightsRef()
 {
-    double sum = 0.0;
-
-    // Sum our contributions of the errors at the nodes we feed
-
-    for (size_t neuron_index = 0; neuron_index < next_layer.size() - 1 /*no bias neuron*/; ++neuron_index) {
-        sum += output_weights_[neuron_index].weight_ * next_layer[neuron_index].gradient_;
-    }
-
-    return sum;
+    return this->output_weights_;
 }
 
-
-
+const std::vector<Connection>& Neuron::GetOutputWeightsRef() const
+{
+    return this->output_weights_;
+}
 
 
 
@@ -108,5 +108,5 @@ double Neuron::TransferFunctionDerivative(double x)
 
 double Neuron::RandomWeight(void)
 {
-    return rand() / double(RAND_MAX);
+    return double(rand()) / double(RAND_MAX);
 }
