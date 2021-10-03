@@ -17,7 +17,7 @@ void xorTest()
     std::vector<double> result_vals = { 0 };
 
     //doing the training
-    for (int i = 1; i <= numOfTests; ++i) {
+    for (int i = 1; i <= 1000; ++i) {
         std::cin >> input_vals[0];
         std::cin >> input_vals[1];
         std::cin >> target_vals[0];

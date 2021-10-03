@@ -12,7 +12,7 @@ public:
 	void SetNetworkName(const std::string& network_name);
 
 private:
-
+	void TrainNetwork();
 	std::string data_file_name_;
 	std::string network_name_;
 	
