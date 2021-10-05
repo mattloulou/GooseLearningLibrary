@@ -30,21 +30,32 @@ void LogicNeuralNetwork::SetNetworkName(const std::string& network_name)
 
 bool LogicNeuralNetwork::TrainNetwork()
 {
+
+	std::vector<size_t>& topology = GetTopologyRef();
+	//defining variables
+	std::vector<double> input_vals(topology.front());
+	std::vector<double> target_vals(topology.back());
+	std::vector<double> result_vals(topology.back());
+	
+	
 	std::ifstream input(data_file_name_);
 	if (!input.is_open()) return false;
 
-	std::string dataLine;
-	for (size_t input_index = 0; input_index < GetTopologyRef()[0]; ++input_index) {
-		 (input >> dataLine)
-	}
-	for (size_t input_index = 0; input_index < GetTopologyRef()[0]; ++input_index) {
-		(input >> dataLine)
+	double read_data;
+
+	while (input.good()) {
+
+
+		for (size_t input_index = 0; input_index < topology.front(); ++input_index) {
+			input >> read_data;
+			input_vals.push_back(read_data);
+		}
+
+		//TODO: need loop for last layer
+		for (size_t output_index = 0; output_index < topology.back(); ++output_index) {
+			input >> read_data;
+			input_vals.push_back(read_data);
+		}
 	}
 	
-	//defining variables
-	/*std::vector<double> input_vals(topology.front());
-	std::vector<double> target_vals(topology.back());
-	std::vector<double> result_vals(topology.back());*/
 }
-
-//0 1 1
