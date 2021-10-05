@@ -34,8 +34,11 @@ bool LogicNeuralNetwork::TrainNetwork()
 	if (!input.is_open()) return false;
 
 	std::string dataLine;
-	while (std::getline(input, dataLine)) {
-
+	for (size_t input_index = 0; input_index < GetTopologyRef()[0]; ++input_index) {
+		 (input >> dataLine)
+	}
+	for (size_t input_index = 0; input_index < GetTopologyRef()[0]; ++input_index) {
+		(input >> dataLine)
 	}
 	
 	//defining variables
@@ -43,3 +46,5 @@ bool LogicNeuralNetwork::TrainNetwork()
 	std::vector<double> target_vals(topology.back());
 	std::vector<double> result_vals(topology.back());*/
 }
+
+//0 1 1
