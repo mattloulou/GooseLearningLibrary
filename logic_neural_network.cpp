@@ -56,6 +56,10 @@ bool LogicNeuralNetwork::TrainNetwork()
 	//testing body loop
 	while (input.good()) {
 
+		//clear the vectors
+		input_vals.clear();
+		target_vals.clear();
+		result_vals.clear();
 		//getting the input data for one line of data
 		for (size_t input_index = 0; input_index < topology.front(); ++input_index) {
 			input >> read_data;
