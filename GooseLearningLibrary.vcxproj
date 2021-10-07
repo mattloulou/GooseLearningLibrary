@@ -143,6 +143,7 @@
     <ClInclude Include="logic_neural_network.h" />
     <ClInclude Include="neural_net.h" />
     <ClInclude Include="neuron.h" />
+    <ClInclude Include="preset_network_test.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="connection.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="neural_net.cpp" />
     <ClCompile Include="neuron.cpp" />
+    <ClCompile Include="preset_network_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

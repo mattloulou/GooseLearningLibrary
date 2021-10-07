@@ -27,6 +27,9 @@
     <ClInclude Include="logic_neural_network.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="preset_network_test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="connection.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="logic_neural_network.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="preset_network_test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
