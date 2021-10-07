@@ -1,4 +1,5 @@
 #include "neural_net.h"
+#include "preset_network_test.h"
 #include <iostream>
 
 using namespace std;
@@ -120,5 +121,6 @@ int main()
     //xorTest();
     //_AimpliesB_And_Not_CimpliesD_();
     //OutputBarNetwork();
-    InputBarNetwork();
+    //InputBarNetwork();
+    PresetNetworkTests::LogicNetworkTest();
 }
