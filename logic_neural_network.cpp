@@ -1,5 +1,6 @@
 #include "logic_neural_network.h"
 #include <fstream>
+#include <cassert>
 
 LogicNeuralNetwork::LogicNeuralNetwork(const std::vector<size_t>& topology, const std::string& data_file_name, const std::string& network_name) : NeuralNet(topology), testing_correct_(0), testing_incorrect_(0), is_print_testing_info_(false)
 {
@@ -60,6 +61,7 @@ bool LogicNeuralNetwork::TrainNetwork()
 		input_vals.clear();
 		target_vals.clear();
 		result_vals.clear();
+
 		//getting the input data for one line of data
 		for (size_t input_index = 0; input_index < topology.front(); ++input_index) {
 			input >> read_data;
@@ -72,6 +74,8 @@ bool LogicNeuralNetwork::TrainNetwork()
 			target_vals.push_back(read_data);
 		}
 
+		
+		
 		//TODO: add in a flag for printing the testing data while it is ran
 		//if(is_print_testing_info_)
 
@@ -86,6 +90,10 @@ bool LogicNeuralNetwork::TrainNetwork()
 		else {
 			++testing_incorrect_;
 		}
+
+		//making sure the training data inputs match topology quantities:
+		assert(input_vals.size() == topology.front());
+		assert(target_vals.size() == topology.back());
 	}
 
 	return true;
