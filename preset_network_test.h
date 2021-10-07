@@ -2,7 +2,7 @@
 class PresetNetworkTests
 {
 public:
-	void LogicNetworkTest() const;
+	static void LogicNetworkTest();
 
 private:
 
