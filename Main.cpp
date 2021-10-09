@@ -21,8 +21,6 @@ void InputBarNetwork()
 
 int main() 
 {
-    //xorTest();
-    //_AimpliesB_And_Not_CimpliesD_();
     //OutputBarNetwork();
     //InputBarNetwork();
     PresetNetworkTests::LogicNetworkTest();
