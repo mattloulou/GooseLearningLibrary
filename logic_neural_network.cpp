@@ -6,7 +6,6 @@ LogicNeuralNetwork::LogicNeuralNetwork(const std::vector<size_t>& topology, cons
 {
 	data_file_name_ = data_file_name;
 	network_name_ = network_name;
-
 }
 
 const std::string& LogicNeuralNetwork::GetDataFileName() const
@@ -40,9 +39,8 @@ void LogicNeuralNetwork::SetNetworkName(const std::string& network_name)
 
 bool LogicNeuralNetwork::TrainNetwork()
 {
-
+	//defining and initializing variables
 	std::vector<size_t>& topology = GetTopologyRef();
-	//defining variables
 	std::vector<double> input_vals(topology.front());
 	std::vector<double> target_vals(topology.back());
 	std::vector<double> result_vals(topology.back());

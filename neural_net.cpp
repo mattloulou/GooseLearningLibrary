@@ -230,7 +230,6 @@ bool NeuralNet::ImportNetworkFile(const std::string& file_name)
         }
     }
     
-
     input.close();
     return true;
 }
